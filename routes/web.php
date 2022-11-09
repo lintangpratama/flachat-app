@@ -25,7 +25,13 @@ Route::middleware("auth")->group(function (){
     // chat
     Route::prefix("chat")->name("chat.")->group(function (){
         Route::get("/", [ChatController::class, "index"])->name("index");
+        Route::get("/load", [ChatController::class, "loadMessage"])->name("load");
+        Route::post("/", [ChatController::class, "saveMessage"])->name("save");
     });
+    //room
+    
+    Route::post("/room", [RoomController::class, "create"])->name("room.create");
+
     // logout
     Route::get("/logout", [LoginController::class, "logout"])->name("logout");
 });

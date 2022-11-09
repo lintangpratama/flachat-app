@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
             // set chat room properties
             document.querySelector(".friend-name").innerHTML = name
             document.querySelector(".header-img").innerHTML = `<img src="${avatar}" />`;
-            showHideChatBox(true)
+           
+            createRoom(id)
         });
     });
 });
@@ -68,4 +69,18 @@ function showHideChatBox(show) {
         document.getElementById("main-right").classList.add("hidden")
         document.getElementById("main-empty").classList.remove("hidden")
     }
+}
+
+
+function createRoom(friendId) {
+    let url = document.getElementById("room-url").value;
+    let formData = new FormData();
+         formData.append("friend_id", friendId);
+
+    axios.post(url, formData)
+        .then(function (res) {
+            console.log(res)
+            showHideChatBox(true)
+        })
+        console.log(formData)
 }

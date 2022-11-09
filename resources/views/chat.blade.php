@@ -76,6 +76,9 @@
 <div id="creator" class="creator">
     <p>Login as  <span>{{ auth()->user()->name }}</span></p>
 </div>
+
+<input type="hidden" name="" id="room-url" value="{{route("room.create")}}">
+@vite('resources/js/app.js')
 <script src="{{ asset("assets/js/chat.js") }}"></script>
 </body>
 </html>
