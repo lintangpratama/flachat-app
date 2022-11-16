@@ -12,7 +12,7 @@ class RoomController extends Controller
    {
     # code...
     $me = auth()->user()->id;
-    $friend = $request->friend_id();
+    $friend = $request->friend_id;
 
     $room = Room::where("users", $me.":".$friend)
                         ->orWhere("users", $friend.":".$me)->first();

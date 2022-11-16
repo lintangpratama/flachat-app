@@ -19,7 +19,7 @@ class ChatController extends Controller
     public function saveMessage(Request $request)
     {
         # code...
-        $roomid = $request->roomid;
+        $roomid = $request->roomId;
         $userid = auth()->user()->id;
         $message = $request->message;
         broadcast(new SendMessage($roomid, $userid, $message));

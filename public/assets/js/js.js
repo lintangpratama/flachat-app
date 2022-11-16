@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
             document.querySelector(".friend-name").innerHTML = name
             document.querySelector(".header-img").innerHTML = `<img src="${avatar}" />`;
             showHideChatBox(true)
-            console.log("a")
         });
     });
 });
@@ -81,8 +80,6 @@ function createRoom(friendId) {
 
     axios.post(url, formData)
         .then(function (res) {
-            console.log(res)
             showHideChatBox(true)
         })
-        console.log(formData)
 }

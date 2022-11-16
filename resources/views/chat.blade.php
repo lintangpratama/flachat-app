@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,24 +8,25 @@
     <title>Chat App Template</title>
     <link rel="stylesheet" href="{{ asset("assets/css/chat.css") }}">
 </head>
+
 <body>
-<div id="app" class="app">
+    <div id="app" class="app">
 
-    <!-- LEFT SECTION -->
+        <!-- LEFT SECTION -->
 
-    <section id="main-left" class="main-left">
-        <!-- header -->
-        <div id="header-left" class="header-left">
-             Mini Chat
-        </div>
+        <section id="main-left" class="main-left">
+            <!-- header -->
+            <div id="header-left" class="header-left">
+                Mini Chat
+            </div>
 
-        <!-- chat list -->
-        <div id="chat-list" class="chat-list">
-            <!-- user lists -->
-            @foreach($friends as $friend)
-             @php 
+            <!-- chat list -->
+            <div id="chat-list" class="chat-list">
+                <!-- user lists -->
+                @foreach($friends as $friend)
+                @php
                 $avatar = "ava".(rand(1,8)).".jpg";
-            @endphp
+                @endphp
                 <div class="friends" data-id="{{ $friend->id }}" data-name="{{ $friend->name }}" data-avatar="{{ asset("assets/images"."/".$avatar) }}">
                     <!-- photo -->
                     <div class="profile friends-photo">
@@ -38,47 +40,50 @@
                         <span class="friends-message friend-status">Offline</span>
                     </div>
                 </div>
-            @endforeach
-        </div>
-    </section>
+                @endforeach
+            </div>
+        </section>
 
 
 
-    <!-- RIGHT SECTION -->
-    <section id="main-empty" class="main-right">
-        <p style="text-align: center; font-size: 35px">Welcome to mini chat</p>
-    </section>
-    <section id="main-right" class="main-right hidden">
-        <!-- header -->
-        <div id="header-right" class="header-right">
-            <!-- profile pict -->
-            <div id="header-img" class="profile header-img">
-                <img src="{{ asset("assets/images/ava2.jpg") }}" alt="">
+        <!-- RIGHT SECTION -->
+        <section id="main-empty" class="main-right">
+            <p style="text-align: center; font-size: 35px">Welcome to mini chat</p>
+        </section>
+        <section id="main-right" class="main-right hidden">
+            <!-- header -->
+            <div id="header-right" class="header-right">
+                <!-- profile pict -->
+                <div id="header-img" class="profile header-img">
+                    <img src="{{ asset("assets/images/ava2.jpg") }}" alt="">
+                </div>
+
+                <!-- name -->
+                <h4 class="name friend-name">Mario Gomez</h4>
             </div>
 
-            <!-- name -->
-            <h4 class="name friend-name">Mario Gomez</h4>
-        </div>
+            <!-- chat area -->
+            <div id="chat-area" class="chat-area">
+                <!-- chat content -->
 
-        <!-- chat area -->
-        <div id="chat-area" class="chat-area">
-            <!-- chat content -->
+            </div>
 
-        </div>
+            <!-- typing area -->
+            <div id="typing-area" class="typing-area">
+                <!-- input form -->
+                <input id="type-area" class="type-area" placeholder="Type something...">
+            </div>
+        </section>
+    </div>
+    <div id="creator" class="creator">
+        <p>Login as <span>{{ auth()->user()->name }}</span></p>
+    </div>
 
-        <!-- typing area -->
-        <div id="typing-area" class="typing-area">
-            <!-- input form -->
-            <input id="type-area" class="type-area" placeholder="Type something...">
-        </div>
-    </section>
-</div>
-<div id="creator" class="creator">
-    <p>Login as  <span>{{ auth()->user()->name }}</span></p>
-</div>
-
-<input type="hidden" name="" id="room-url" value="{{route("room.create")}}">
-@vite('resources/js/app.js')
-<script src="{{ asset("assets/js/chat.js") }}"></script>
+    <input type="hidden" name="" id="room-url" value="{{route("room.create")}}">
+    <input type="hidden" name="" id="message-url" value="{{route("chat.save")}}">
+    <input type="hidden" name="" id="load-chat-url" value="{{route("chat.load", ["roomId" => ":roomId"])}}">
+    @vite('resources/js/app.js')
+    <script src="{{ asset("assets/js/chat.js") }}"></script>
 </body>
+
 </html>

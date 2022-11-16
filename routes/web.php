@@ -25,7 +25,7 @@ Route::middleware("auth")->group(function (){
     // chat
     Route::prefix("chat")->name("chat.")->group(function (){
         Route::get("/", [ChatController::class, "index"])->name("index");
-        Route::get("/load", [ChatController::class, "loadMessage"])->name("load");
+        Route::get("/load/{roomId}", [ChatController::class, "loadMessage"])->name("load");
         Route::post("/", [ChatController::class, "saveMessage"])->name("save");
     });
     //room
