@@ -97,7 +97,8 @@ function createRoom(friendId, avatar) {
         Echo.join(`chat.${room.id}`)
             .here((users) => {
                 console.log("Join success");
-                loadMessage(room.id, friendId);
+              
+                loadMessage(room.id, friendId, avatar);
                 document
                     .querySelector("#type-area")
                     .addEventListener("keydown", function (e) {
@@ -110,14 +111,17 @@ function createRoom(friendId, avatar) {
                             }
                         }
                     });
-            })
-            .listen("SendMessage", (e) => {
-                if (e.userId == friendId) {
-                    handelLeftMessage(e.message, avatar);
-                }
-            })
+            }).listen(".SendMessage", (e) =>{
+                console.log("pesan baru")
+
+            } )
             .joining((user) => {
-                console.log(user.name);
+                console.log(`user join as ${user.name}`);
+                document.querySelectorAll(".friends").forEach(function (el) {
+                    if (el.getAttribute("data-id")==user.id){
+                        el.querySelector(".friends-credent > .friend-status").innerHTML = "<p> online </p>"
+                    }
+                })
             })
             .leaving((user) => {
                 console.log(user.name);
@@ -129,14 +133,35 @@ function createRoom(friendId, avatar) {
     });
 }
 
-function loadMessage(roomId, friendId) {
+function loadMessage(roomId, friendId, avatar) {
     let url = document.getElementById("load-chat-url").value;
     url = url.replace(":roomId", roomId);
 
     axios.get(url).then((res) => {
         let data = res.data.data;
-
+        console.log(data.length)
         if (data.length > 0) {
+            data.forEach(function (value) {
+                if (value.user_id==friendId) {
+                    handelLeftMessage(value.message, avatar)
+                }
+                else{
+                    let html =
+                    ' <div id="your-chat" class="your-chat">\n' +
+                    '                <p class="your-chat-balloon">' +
+                    value.message +
+                    "</p>\n" +
+                    "            </div>";
+                    var chatBody = document.querySelector("#chat-area");
+                    chatBody.insertAdjacentHTML("beforeend", html);
+                    chatBody.scrollTo({
+                        left: 0,
+                        top: chatBody.scrollHeight,
+                        behavior: "smooth",
+                    });
+                }
+            })
+
         } else {
             document.querySelector(".chat-area").innerHTML =
                 "<p style='text-align: center' >Tidak memiliki pesan</p>";
