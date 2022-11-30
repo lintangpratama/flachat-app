@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
             document.querySelector(".friend-name").innerHTML = name;
             document.querySelector(
                 ".header-img"
-            ).innerHTML = `<img src="${avatar}" />`;
+            ).innerHTML = `<img src="${avatar}" class="rounded-circle user_img"/>`;
 
             createRoom(id, avatar);
         });

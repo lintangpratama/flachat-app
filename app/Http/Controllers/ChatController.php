@@ -13,7 +13,7 @@ class ChatController extends Controller
     {
         $data["friends"] = User::whereNot("id", auth()->user()->id)->get();
        
-        return view("chat", $data);
+        return view("chats", $data);
     }
 
     public function saveMessage(Request $request)

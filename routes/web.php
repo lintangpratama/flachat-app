@@ -30,6 +30,11 @@ Route::middleware("auth")->group(function (){
     });
     //room
     
+    Route::prefix("chats")->name("chat.")->group(function (){
+        Route::get("/", [ChatController::class, "index"])->name("index");
+        Route::get("/load/{roomId}", [ChatController::class, "loadMessage"])->name("load");
+        Route::post("/", [ChatController::class, "saveMessage"])->name("save");
+    });
     Route::post("/room", [RoomController::class, "create"])->name("room.create");
 
     // logout
