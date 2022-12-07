@@ -122,7 +122,7 @@ function createRoom(friendId, avatar) {
             .joining((user) => {
                 console.log(`user join as ${user.name}`);
 
-                  loadMessage(room.id, friendId, avatar);
+                 
                 document
                     .querySelector("#type-area")
                     .addEventListener("keydown", function (e) {
@@ -136,11 +136,7 @@ function createRoom(friendId, avatar) {
                         }
                     });
                 
-                document.querySelectorAll(".friends").forEach(function (el) {
-                    if (el.getAttribute("data-id")==user.id){
-                        el.querySelector(".friends-credent > .friend-status").innerHTML = "<p> online </p>"
-                    }
-                })
+               
             })
             .leaving((user) => {
                 console.log(`user meninggalkan room ${user.name}`);

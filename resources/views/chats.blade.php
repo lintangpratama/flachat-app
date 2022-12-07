@@ -19,12 +19,17 @@
         <div class="row justify-content-center h-100">
             <div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
                 <div class="card-header">
-                    <div class="input-group">
-                        <input type="text" placeholder="Search..." name="" class="form-control search">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
+                    <form action="" method="get">
+                        <div class="input-group">
+                            <input type="text" placeholder="Search..." name="search" id="search" class="form-control search">
+                            <div class="input-group-prepend">
+                               <button type="submit" class="btn  btn-primary-outline">
+                                <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
+                                </button> 
+                            </div>
                         </div>
-                    </div>
+                    </form>
+                    
                 </div>
                 <div class="card-body contacts_body">
                     <ul class="contacts">
@@ -37,20 +42,42 @@
                         <li class="">
                             <div class="d-flex bd-highlight">
                                 <div class="img_cont profile friends-photo">
-                                    <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
+                                    <img src="{{ asset("assets/images"."/".$avatar) }}" class="rounded-circle user_img">
+                                    
+
+                                    @if(Cache::has('is_online' . $friend->id))
+
                                     <span class="online_icon"></span>
+
+                                    @else
+
+                                    <span class="online_icon offline"></span>
+
+                                        @endif
                                 </div>
                                 <div class="user_info friends-credent">
                                     <span class="friends-name">{{ $friend->name }}</span>
-                                    <p>Kalid is online</p>
+                                        @if(Cache::has('is_online' . $friend->id))
+
+                                        <p class="text-success"><b>Online</b></p>
+
+                                        @else
+
+                                        <p ><b>Offline</b></p>
+
+                                            @endif
+
                                 </div>
                             </div>
                         </li>
                         </div>
                    @endforeach
+                   
                     </ul>
                 </div>
-                <div class="card-footer"></div>
+                <div class="card-footer">
+                    login as  {{ auth()->user()->name }} ,  <a href="/logout" class="btn btn-danger text-white text-center"> logout</a>
+                </div>
             </div></div>
             
             <div class="col-md-8 col-xl-6 chat">
@@ -88,7 +115,7 @@
                     <div class="card-footer">
                         <div class="input-group">
                             <div class="input-group-append">
-                                <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
+                                <span class="input-group-text attach_btn"></span>
                             </div>
                             <textarea name="" id="type-area"  class=" type-area form-control type_msg" placeholder="Type your message..."></textarea>
                             <div class="input-group-append">

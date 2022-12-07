@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\URL;
 
 class LoginController extends Controller
@@ -33,6 +34,29 @@ class LoginController extends Controller
             }
         }
         return abort(404);
+    }
+    public function store( Request $request)
+    {
+        # code...
+       
+        $validatedData = $request->validate([
+            'name' => 'max:50|required',
+            'email' => 'max:100|required|email',
+            'password' => 'max:50|required',
+           ]);
+          
+           $validatedData['id'] = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 11);
+          // dd($validatedData);
+          $user = User::create($validatedData);
+         auth()->login($user);
+        
+         return redirect()->to('/chat');
+    }
+
+    public function register()
+    {
+        # code...
+        return view("register");
     }
 
     /**

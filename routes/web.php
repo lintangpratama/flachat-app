@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware("guest")->group(function (){
     Route::get("/", [LoginController::class, "index"])->name("login");
     Route::post("/login", [LoginController::class, "login"])->name("login.trigger");
+    Route::get("/register", [LoginController::class, "register"]);
+    Route::post("/registers", [LoginController::class, "store"])->name("register.trigger");
 });
 
 Route::middleware("auth")->group(function (){
