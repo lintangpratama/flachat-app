@@ -9,11 +9,22 @@ use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data["friends"] = User::whereNot("id", auth()->user()->id)->get();
-       
-        return view("chat", $data);
+        $data = ["friends" => [],
+         "all_user" => []
+        ];
+        if ($request->search) {
+            # code...
+            $data["friends"] = User::whereNot("id", auth()->user()->id)
+                ->where('name', 'like', '%'.$request->search. '%')->get();
+            
+        }
+        else{
+        
+        $data["friends"] = (auth()->user()->friends);
+        }
+       return view("chats", $data);
     }
 
     public function saveMessage(Request $request)

@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware("guest")->group(function (){
     Route::get("/", [LoginController::class, "index"])->name("login");
     Route::post("/login", [LoginController::class, "login"])->name("login.trigger");
+    Route::get("/register", [LoginController::class, "register"]);
+    Route::post("/registers", [LoginController::class, "store"])->name("register.trigger");
 });
 
 Route::middleware("auth")->group(function (){
@@ -30,6 +32,11 @@ Route::middleware("auth")->group(function (){
     });
     //room
     
+    Route::prefix("chats")->name("chat.")->group(function (){
+        Route::get("/", [ChatController::class, "index"])->name("index");
+        Route::get("/load/{roomId}", [ChatController::class, "loadMessage"])->name("load");
+        Route::post("/", [ChatController::class, "saveMessage"])->name("save");
+    });
     Route::post("/room", [RoomController::class, "create"])->name("room.create");
 
     // logout
